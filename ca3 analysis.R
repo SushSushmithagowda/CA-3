@@ -1,11 +1,29 @@
+
+
+
+
+#To check whether Crop_Yield_per_Hectare_Tonnes is normally distributed or not
+#shapiro test is executed
+
+#Normality test for Crop_Yield_per_Hectare_Tonnes
+normality_test_Crop_Yield_per_Hectare_Tonnes <- shapiro.test(crop_yield$
+                                                               Crop_Yield_per_Hectare_Tonnes)
+normality_test_Crop_Yield_per_Hectare_Tonnes$p.value
+
+
+
+# Normality test for Business_expenditure_on_technology 
+normality_test_Business_expenditure_on_Technology <- shapiro.test(business_expenditure_on_technology
+                                                                  $Business_expenditure_on_Technology)
+normality_test_Business_expenditure_on_Technology$p.value
+
+#installing pwr package for power analysis
 install.packages("pwr")
-
 library(pwr)
-
 library(dplyr)
 
 #effect size is calculated to know the sample size
-effect_size <- cohen.ES(test = "r", size = "large")
+effect_size <- cohen.ES(test = "r", size = "medium")
 effect_size
 
 #The sample size is calculated by using the effect size obtained
@@ -15,19 +33,21 @@ sample_size
 #approximate correlation power calculaion is obatianed by plotting the sample size
 plot(sample_size)
 
-#Reading the two csv files
-Business_expenditure_on_technology <- read.csv("Business_expenditure_on_Technology.csv")
-Crop_yield_potato <- read.csv("crop_yield.csv")
+#Loading the two csv files 
+Business_expenditure_on_technology <- read.csv("business_expenditure_on_Technology.csv")
+Crop_yield <- read.csv("crop_yield.csv")
+
 
 #merging the two datasets to a variable called "data"
-data <- merge(Business_expenditure_on_technology, Crop_yield_potato)
+data <- merge(Business_expenditure_on_technology, Crop_yield)
 head(data)
 
-sample_data <- sample_n(data, 29)
+sample_data <- sample_n(data, 85)
 head(sample_data) #To display the first six records of sample_data
 nrow(sample_data) #To display the nrow of sample_data
 
-#using cor.test to see whether the two columns have a relation 
+#using spearman nonparametric test to see whether the two columns have a relation 
 #and to find the p-value and confidence interval
-cor.test(sample_data$Business_expenditure_on_Technology, 
-         sample_data$Crop_Yield_per_Hectare_Tonnes)
+Cor_test <- cor.test(sample_data$Crop_Yield_per_Hectare_Tonnes, 
+         sample_data$Business_expenditure_on_Technology, method = "spearman" )
+Cor_test
