@@ -23,7 +23,7 @@ library(pwr)
 library(dplyr)
 
 #effect size is calculated to know the sample size
-effect_size <- cohen.ES(test = "r", size = "medium")
+effect_size <- cohen.ES(test = "r", size = "large")
 effect_size
 
 #The sample size is calculated by using the effect size obtained
@@ -42,7 +42,7 @@ Crop_yield <- read.csv("crop_yield.csv")
 data <- merge(Business_expenditure_on_technology, Crop_yield)
 head(data)
 
-sample_data <- sample_n(data, 85)
+sample_data <- sample_n(data, 29)
 head(sample_data) #To display the first six records of sample_data
 nrow(sample_data) #To display the nrow of sample_data
 
